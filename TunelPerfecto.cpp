@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 struct Tiempo{
@@ -225,14 +226,13 @@ int main (){
 	extraeDatos(control, pasados, no_pasados);
 	
 	cout << endl;
+	cout << "\033[1;33m-------------------------------------------------------\033[0m" << endl;
+    cout << "\033[1;33m           Registro de Velocidades de Vehiculos        \033[0m" << endl;
+    cout << "\033[1;33m-------------------------------------------------------\033[0m" << endl;
+	cout << endl;
+	cout << "\033[1;34m              Made by Marco Calvo Jimenez              \033[0m" << endl << endl << endl << endl;
 	
-	cout << "-------------------------------------------------------" << endl;
-	cout << "           Registro de Velocidades de Vehiculos        " << endl;
-	cout << "-------------------------------------------------------" << endl;
-	cout << endl << endl;
-	
-	
-	cout << "----- Vehiculos con exceso de velocidad -----" << endl;
+	cout << "\033[1;31m---------- Vehiculos con exceso de velocidad ----------\033[0m" << endl;
 	cout << endl << endl;
 	
 	for (int i=0; i<control.util; i++){
@@ -244,37 +244,48 @@ int main (){
 	porcen_exceso=((pasados.util*1.0)/num_vehiculos)*100;
 	porcen_sin=100-porcen_exceso;
 	
-    for (int i=0; i<pasados.util; i++){
-        Registro reg;
-        copiarRegistro(reg, pasados.conjunto[i]);
-        cout << reg.matricula << endl;
-        cout << "Hora de Entrada: " << toString(reg.entrada) << endl;
-        cout << "Hora de Salida: " << toString(reg.salida) << endl;
-        cout << "Velocidad Promedio: " << velocidadPromedio(reg) << " km/h" << endl;
-        cout << "**Multa**" << endl;
-        cout << endl;
-    }
+	if (pasados.util!=0){
+	
+	    for (int i=0; i<pasados.util; i++){
+	        Registro reg;
+	        copiarRegistro(reg, pasados.conjunto[i]);
+	        cout << "Vehiculo: " << reg.matricula << endl;
+	        cout << "Hora de Entrada:   " << toString(reg.entrada) << "   Hora de Salida:   " << toString(reg.salida) <<"   Velocidad Promedio:  " << velocidadPromedio(reg) << " km/h" << endl;
+	        cout << endl;
+	    }
+    
+    } else {
+		cout << "          No se ha registrado ningun vehiculo." << endl << endl;
+	}
+    
 	cout << endl;
 	
-    cout << "----- Vehiculos sin exceso de velocidad -----" << endl;
+    cout << "\033[1;32m---------- Vehiculos sin exceso de velocidad ----------\033[0m" << endl;
     cout << endl << endl;
-    
-    for (int i=0; i<no_pasados.util; i++){
-        Registro reg;
-        copiarRegistro(reg,no_pasados.conjunto[i]);
-        cout << reg.matricula << endl;
-        cout << "Hora de Entrada: " << toString(reg.entrada) << endl;
-        cout << "Hora de Salida: " << toString(reg.salida) << endl;
-        cout << "Velocidad Promedio: " << velocidadPromedio(reg) << " km/h"<<endl;
-        cout << endl;
-    }
+    	
+    if (no_pasados.util!=0){
+    	
+	    for (int i=0; i<no_pasados.util; i++){
+		    Registro reg;
+		    copiarRegistro(reg,no_pasados.conjunto[i]);
+		    cout <<  "Vehiculo: " << reg.matricula << endl;
+		    cout << "Hora de Entrada:   " << toString(reg.entrada) << "   Hora de Salida:   " << toString(reg.salida) << "   Velocidad Promedio:  " << velocidadPromedio(reg) << " km/h" <<endl;
+		    cout << endl;
+		}
+	
+	} else {
+		cout << "          No se ha registrado ningun vehiculo." << endl << endl;
+	}
+	
     cout << endl;
-    cout << "-------------------------------------------------------" << endl;
-	cout << "                 Estadisticas Generales                " << endl;
-	cout << "-------------------------------------------------------" << endl;
-    cout << "Total de Vehiculos Registrados: " << num_vehiculos << endl;
-    cout << "Velocidad Promedio de todos los Vehiculos: " << vel_promedio << endl;
-    cout << "Porcentaje de Vehiculos sin Exceso de Velocidad: " << porcen_sin << endl;
+    cout << "\033[1;33m-------------------------------------------------------\033[0m" << endl;
+    cout << "\033[1;33m                 Estadisticas Generales                \033[0m" << endl;
+    cout << "\033[1;33m-------------------------------------------------------\033[0m" << endl <<  endl;
+    cout << "Total de Vehiculos Registrados: " << num_vehiculos << endl << endl;
+    cout << "Total de Vehiculos Excedidos: " << pasados.util << endl << endl;
+    cout << "Total de Vehiculos sin Exceder: " << no_pasados.util << endl << endl;
+    cout << "Velocidad Promedio de todos los Vehiculos: " << vel_promedio << " km/h" << endl << endl;
+    cout << "Porcentaje de Vehiculos sin Exceso de Velocidad: " << porcen_sin << endl << endl;
     cout << "Porcentaje de Vehiculos con Exceso de Velocidad: " << porcen_exceso << endl;
     
 	return 0;
